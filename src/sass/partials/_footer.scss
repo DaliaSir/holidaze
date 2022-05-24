@@ -1,0 +1,65 @@
+.footer-container {
+  background-color: $colour-background-footer;
+  color: $colour-ui-secondary;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 40px 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  &__list {
+    margin: 0 auto 30px auto;
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+    text-align: center;
+    h6 {
+      text-transform: uppercase;
+    }
+    a {
+      text-decoration: none;
+      color: $colour-ui-secondary;
+    }
+    &--item {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+    &--address {
+      margin-bottom: 20px;
+    }
+    &--icons {
+      font-size: 1.5rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+    &--icon {
+      padding: 8px;
+    }
+  }
+  img {
+    max-width: 120px;
+    margin: 10px;
+  }
+}
+
+.footer-container.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.footer-copy {
+  background-color: $colour-background-footer;
+  color: $colour-ui-secondary;
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 0 20px 20px 20px;
+}
+
+@media (min-width: $bootstrap-md) {
+  .footer-container {
+    flex-direction: row;
+  }
+}

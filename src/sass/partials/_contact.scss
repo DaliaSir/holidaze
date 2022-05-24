@@ -1,0 +1,29 @@
+.contact-container {
+  background-color: $colour-background;
+  min-height: 100vh;
+  padding: 0 20px 60px 20px;
+
+  &__form {
+    max-width: $bootstrap-md;
+    .btn.btn-primary {
+      color: $colour-ui-primary;
+      background-color: $colour-primary;
+      border: 2px solid $colour-primary-shade;
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+      text-transform: uppercase;
+      font-size: 1.125rem;
+      letter-spacing: 0.05rem;
+      &:hover {
+        background-color: transparent;
+      }
+    }
+    &--success-message {
+      color: $colour-success;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  }
+}

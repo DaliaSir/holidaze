@@ -1,0 +1,23 @@
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0 auto;
+  font-family: $font-primary;
+  color: $colour-ui-primary;
+}
+
+.main-wrapper {
+  min-height: 100vh;
+}
+
+.container {
+  padding: 0;
+}
+
+.form-error {
+  color: $colour-danger;
+  padding-top: 10px;
+}

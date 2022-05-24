@@ -1,0 +1,24 @@
+.signin-container {
+  background-color: $colour-background;
+  padding-bottom: 60px;
+  min-height: 100vh;
+
+  &__form {
+    max-width: $bootstrap-md;
+    padding: 20px 20px;
+
+    .btn.btn-primary {
+      color: $colour-ui-primary;
+      background-color: $colour-primary;
+      border: 2px solid $colour-primary-shade;
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+      text-transform: uppercase;
+      font-size: 1.125rem;
+      letter-spacing: 0.05rem;
+      margin-top: 20px;
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
