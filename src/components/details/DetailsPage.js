@@ -121,35 +121,37 @@ export default function DetailsPage() {
               {submittingError && <FormError>{submittingError}</FormError>}
               <fieldset disabled={submitting}>
                 <Form.Group className="mb-3 enquiry-modal__form--form-group" >
-                  <Form.Label>Full Name</Form.Label>
+                  <Form.Label>Full Name &#42;</Form.Label>
                   <input {...register("name")} className="form-control" placeholder="Your full name" />
                   {errors.name && <FormError>{errors.name.message}</FormError>}
                 </Form.Group>
                 <Form.Group className="mb-3 enquiry-modal__form--form-group" >
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Email  &#42;</Form.Label>
                   <input {...register("email")} className="form-control" placeholder="Your email address" />
                   {errors.email && <FormError>{errors.email.message}</FormError>}
                 </Form.Group>
                 <Form.Group className="mb-3 enquiry-modal__form--form-group" >
-                  <Form.Label>Phone</Form.Label>
+                  <Form.Label>Phone &#40;Enter your country code if not from Norway&#41;</Form.Label>
                   <input {...register("phone")} className="form-control" placeholder="Your phone number" />
                   {errors.phone && <FormError>{errors.phone.message}</FormError>}
                 </Form.Group>
                 <Form.Group className="mb-3 enquiry-modal__form--form-group" >
-                  <Form.Label>Guests</Form.Label>
+                  <Form.Label>Guests  &#42;</Form.Label>
                   <input {...register("guests")} className="form-control" placeholder="Number of guests" />
                   {errors.guests && <FormError>{errors.guests.message}</FormError>}
                 </Form.Group>
                 <Form.Group className="mb-3 enquiry-modal__form--form-group enquiry-modal__form--check" >
-                  <Form.Label>Check in</Form.Label>
+                  <Form.Label>Check in  &#42;</Form.Label>
                   <input {...register("check_in")} type="date" />
                   {errors.check_in && <FormError>{errors.check_in.message}</FormError>}
                 </Form.Group>
                 <Form.Group className="mb-3 enquiry-modal__form--form-group enquiry-modal__form--check" >
-                  <Form.Label>Check out</Form.Label>
+                  <Form.Label>Check out  &#42;</Form.Label>
                   <input {...register("check_out")} type="date" />
                   {errors.check_out && <FormError>{errors.check_out.message}</FormError>}
                 </Form.Group>
+                <hr />
+                <p> &#42; Required fields</p>
                 <Button className="enquiry-modal__form--btn-close" onClick={props.onHide}>Close</Button>
                 <Button type="submit">{submitting ? 'Booking...' : 'Book'}</Button>
               </fieldset>

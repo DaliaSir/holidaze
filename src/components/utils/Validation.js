@@ -25,10 +25,17 @@ export const addValidationSchema = yup.object().shape({
 export const bookValidationSchema = yup.object().shape({
   name: yup.string().required("Please enter your full name").min(3, "Full name must be at least 3 characters"),
   email: yup.string().required("Please enter an email address").email("Please enter a valid email address"),
-  phone: yup.number().positive("Number of beds must be a positive number").integer(),
-  guests: yup.string().required("Please enter number of guests staying").min(1, "At least 1 guest required"),
-  check_in: yup.date().required("Please select check in date"),
-  check_out: yup.date().required("Please select check out date"),
+  phone: yup
+    .number()
+    .typeError("That doesn't look like a phone number")
+    .positive("A phone number must be a positive number")
+    .integer("A phone number can't include a decimal point")
+    .min(0, 'Min value is 0')
+    .nullable()
+    .transform((value, originalValue) => (String(originalValue).trim() === '' ? null : value)),
+  guests: yup.number().required("Please enter number of guests staying").typeError("That doesn't look like a number").min(1, "At least 1 guest required"),
+  check_in: yup.date("Please select a date").required("Please select check in date").default(() => new Date()),
+  check_out: yup.date("Please select a date").required("Please select check out date").default(() => new Date()),
 });
 
 export const signinValidationSchema = yup.object().shape({
