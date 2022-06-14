@@ -30,6 +30,14 @@ export default function DetailsPage() {
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful } } = useForm({
     resolver: yupResolver(bookValidationSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      guests: "",
+      check_in: "",
+      check_out: ""
+    }
   });
 
   let { id } = useParams();
@@ -141,7 +149,7 @@ export default function DetailsPage() {
                   {errors.guests && <FormError>{errors.guests.message}</FormError>}
                 </Form.Group>
                 <Form.Group className="mb-3 enquiry-modal__form--form-group enquiry-modal__form--check" >
-                  <Form.Label>Check in  &#42;</Form.Label>
+                  <Form.Label>Check in  &#42; &nbsp; &nbsp;</Form.Label>
                   <input {...register("check_in")} type="date" />
                   {errors.check_in && <FormError>{errors.check_in.message}</FormError>}
                 </Form.Group>

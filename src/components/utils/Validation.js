@@ -33,7 +33,7 @@ export const bookValidationSchema = yup.object().shape({
     .min(0, 'Min value is 0')
     .nullable()
     .transform((value, originalValue) => (String(originalValue).trim() === '' ? null : value)),
-  guests: yup.number().required("Please enter number of guests staying").typeError("That doesn't look like a number").min(1, "At least 1 guest required"),
+  guests: yup.number().required("Please enter number of guests staying").typeError("The amount of guests must be a number").min(1, "At least 1 guest required").transform((value) => (isNaN(value) ? undefined : value)),
   check_in: yup.date("Please select a date").required("Please select check in date").default(() => new Date()),
   check_out: yup.date("Please select a date").required("Please select check out date").default(() => new Date()),
 });
