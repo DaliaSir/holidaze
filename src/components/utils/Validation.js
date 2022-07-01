@@ -34,8 +34,19 @@ export const bookValidationSchema = yup.object().shape({
     .nullable()
     .transform((value, originalValue) => (String(originalValue).trim() === '' ? null : value)),
   guests: yup.number().required("Please enter number of guests staying").typeError("The amount of guests must be a number").min(1, "At least 1 guest required").transform((value) => (isNaN(value) ? undefined : value)),
-  check_in: yup.date("Please select a date").required("Please select check in date").default(() => new Date()),
-  check_out: yup.date("Please select a date").required("Please select check out date").default(() => new Date()),
+  check_in: yup
+    .date("Please select a date")
+    .required("Please select check in date")
+    .typeError("Please select a date")
+    .min(new Date(), "Check in date should not be earlier than today")
+    .max(yup.ref("check_out"), "Check in date must be before check out date"),
+  //.min("2022-07-01", "Date is too early")
+  //.max(new Date()),
+  check_out: yup
+    .date("Please select a date")
+    .required("Please select check out date")
+    .typeError("Please select a date")
+    .min(yup.ref("check_in"), "Check out date must be after check in date"),
 });
 
 export const signinValidationSchema = yup.object().shape({
