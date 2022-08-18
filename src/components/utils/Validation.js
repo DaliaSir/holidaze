@@ -39,7 +39,7 @@ export const bookValidationSchema = yup.object().shape({
     .required("Please select check in date")
     .typeError("Please select a date")
     .min(new Date(), "Check in date should not be earlier than today")
-    .max(yup.ref("check_out"), "Check in date must be before check out date"),
+    .max(yup.ref("check_out"), "Check in date must be earlier than check out date"),
   //.min("2022-07-01", "Date is too early")
   //.max(new Date()),
   check_out: yup
