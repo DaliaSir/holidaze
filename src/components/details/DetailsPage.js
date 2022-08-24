@@ -178,7 +178,7 @@ export default function DetailsPage() {
         <Breadcrumb.Item active>{product.name}</Breadcrumb.Item>
       </Breadcrumb>
       <Heading content={product.name} />
-      <Row className="details-container__image-container">
+      <Row className="details-container__image-container" onClick={() => setModalImageShow(true)}>
         {product.images.map((img) => {
           let imageUrl = emptyImage;
           if (product.images.length > 0) {
@@ -186,11 +186,8 @@ export default function DetailsPage() {
           }
           return <Col className="details-container__image col-12 col-sm-6 col-md-3 col-lg-2" key={img.id} style={{ backgroundImage: `url(${imageUrl})` }}></Col>
         })}
-        <Button className="details-container__btn-view" onClick={() => setModalImageShow(true)}>
-          View images
-        </Button>
-        <ImageModal show={modalImageShow} onHide={() => setModalImageShow(false)} />
       </Row>
+      <ImageModal show={modalImageShow} onHide={() => setModalImageShow(false)} />
       <Row className="details-container__info">
         <p className="details-container__info--price">{product.price} <span>NOK / per night</span></p>
         <div className="details-container__info--capacity">
