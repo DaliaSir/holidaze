@@ -10,10 +10,27 @@ export const contactValidationSchema = yup.object().shape({
 
 export const addValidationSchema = yup.object().shape({
   name: yup.string().required("Please enter the name of the place").min(3, "Name must be at least 3 characters"),
-  address: yup.string().required("Please enter an address").min(10, "The address must be at least 10 characters"),
-  price: yup.number().required("Please enter the price").positive("Value of price must be a positive number").integer(),
-  guests: yup.number().required("Please enter the max number of guests").positive("Number of guests must be a positive number").integer().min(1),
-  beds: yup.number().required("Please enter the number of beds").positive("Number of beds must be a positive number").integer().min(1),
+  address: yup.string().required("Please enter the address").min(10, "Address must be at least 10 characters"),
+  price: yup
+    .number()
+    .required("Please enter the price")
+    .typeError("That doesn't look like a price")
+    .positive("Value of price must be a positive number")
+    .integer("Price can't include a decimal point"),
+  guests: yup
+    .number()
+    .required("Please enter the max number of guests")
+    .typeError("The amount of guests must be a number")
+    .positive("Number of guests must be a positive number")
+    .integer("Amount of guests can't include a decimal point")
+    .min(1, "It should be at least 1 guest aloud"),
+  beds: yup
+    .number()
+    .required("Please enter the number of beds")
+    .typeError("That doesn't look like a number")
+    .positive("Number of beds must be a positive number")
+    .integer("Amount of beds can't include a decimal point")
+    .min(1, "It should be at least 1 bed"),
   images: yup.mixed().test("numberOFmages", "Please select exactly 5 images", (value) => {
     return value && value.length === 5;
   }),
@@ -28,8 +45,8 @@ export const bookValidationSchema = yup.object().shape({
   phone: yup
     .number()
     .typeError("That doesn't look like a phone number")
-    .positive("A phone number must be a positive number")
-    .integer("A phone number can't include a decimal point")
+    .positive("Phone number must be a positive number")
+    .integer("Phone number can't include a decimal point")
     .min(0, 'Min value is 0')
     .nullable()
     .transform((value, originalValue) => (String(originalValue).trim() === '' ? null : value)),
@@ -38,7 +55,7 @@ export const bookValidationSchema = yup.object().shape({
     .date("Please select a date")
     .required("Please select check in date")
     .typeError("Please select a date")
-    .min(new Date(Date.now() - 86400000), "Check in date should be earlier than today"),
+    .min(new Date(Date.now() - 86400000), "Check-in date should not be earlier than today"),
   check_out: yup
     .date("Please select a date")
     .required("Please select check out date")
