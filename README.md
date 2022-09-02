@@ -1,8 +1,8 @@
 # Login details
 
 ```
-username: admin
-password: Pass1234
+username: guest
+password: Pass123
 ```
 # Getting Started with Create React App
 
