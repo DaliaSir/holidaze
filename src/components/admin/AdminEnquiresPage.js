@@ -19,10 +19,11 @@ export default function AdminEnquiresPage() {
 
   useEffect(() => {
     async function fetchEnquiries() {
+      setLoading(true);
       try {
         const response = await http.get(url);
         console.log("response", response);
-        setEnquiries(response.data);
+        setEnquiries(response.data.data);
       } catch (error) {
         console.log(error);
         setError("An error occurred:" + error.toString());
@@ -53,7 +54,7 @@ export default function AdminEnquiresPage() {
       <Container>
         <Row>
           {enquiries.map((enquiryItem) => {
-            const { id, name, email, phone, guests, check_in, check_out } = enquiryItem;
+            const { id, attributes: { name, email, phone, guests, check_in, check_out } } = enquiryItem;
             return <EnquiryItem key={id} id={id} name={name} email={email} phone={phone} guests={guests} check_in={check_in} check_out={check_out} />
           })}
         </Row>

@@ -3,7 +3,8 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-export default function Accommodation({ id, name, image, price, guests, beds }) {
+//export default function Accommodation({ id }, { attributes: { name, price, guests, beds, image } }) {
+export default function Accommodation({ id, name, price, guests, beds, image }) {
 
   return (
     <Col sm={6} lg={3} key={id}>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import useAxios from "../../hooks/useAxios";
 import { contactValidationSchema } from "../utils/Validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { BASE_URL, MESSAGE_PATH } from "../../constants/api";
@@ -18,12 +18,20 @@ export default function ContactForm() {
     resolver: yupResolver(contactValidationSchema),
   });
 
+  const http = useAxios();
+
   async function onSubmit(data) {
     setSubmitting(true);
     setsubmittingError(null);
-
     try {
-      const response = await axios.post(url, data);
+      const response = await http.post(url, {
+        data: {
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message
+        }
+      });
       console.log("response", response.data);
     } catch (error) {
       console.log("error", error);

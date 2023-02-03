@@ -19,6 +19,7 @@ export default function Hotels() {
 
   useEffect(() => {
     async function fetchAccommodations() {
+      setLoading(true);
       try {
         const response = await fetch(url);
         if (response.ok) {
@@ -51,8 +52,8 @@ export default function Hotels() {
     return <Alert variant="danger">An error occurred: {error}</Alert>;
   }
 
-  const filteredHotels = accommodations.filter((hotel) => {
-    if (hotel.category === "hotel") {
+  const filteredHotels = accommodations.data.filter((hotel) => {
+    if (hotel.attributes.category.data.attributes.type === "hotel") {
       return true;
     } else {
       return false;
@@ -69,10 +70,10 @@ export default function Hotels() {
       <Heading content="Hotels" />
       <Row className="accommodations-category-container container">
         {filteredHotels.map((accommodation) => {
-          const { id, name, images, price, guests, beds } = accommodation;
+          const { id, attributes: { name, images, price, guests, beds } } = accommodation;
           let imageUrl = 'https://images.unsplash.com/photo-1612437118782-84bb46a5c95a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80';
-          if (images.length > 0) {
-            imageUrl = images[0].url;
+          if (images.data.length > 0) {
+            imageUrl = images.data[0].attributes.url;
           }
           return <Accommodation key={id} id={id} name={name} image={imageUrl} price={price} guests={guests} beds={beds} />
         })}

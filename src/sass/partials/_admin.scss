@@ -135,10 +135,11 @@
     background-color: $colour-background-banner;
     &__name {
       font-size: 1.125rem;
+      font-weight: 600;
       margin-right: 10px;
     }
     &__email {
-      font-weight: 300;
+      font-size: 0.8rem;
       margin-right: 10px;
     }
   }

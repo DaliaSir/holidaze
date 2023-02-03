@@ -21,15 +21,15 @@ export default function AccommodationsPage() {
 
   useEffect(() => {
     async function fetchAccommodations() {
+      setLoading(true);
       try {
         const response = await fetch(url);
         if (response.ok) {
           const json = await response.json();
-          setAccommodations(json);
+          setAccommodations(json.data);
         } else {
           setError("An error occurred");
         }
-
       } catch (error) {
         setError(error.toString());
       } finally {
@@ -70,14 +70,36 @@ export default function AccommodationsPage() {
       </Form>
       <Row className="accommodations-container container">
         {accommodations.map((accommodation) => {
-          const { id, name, images, price, guests, beds } = accommodation;
+          const { id, attributes: { name, images, price, guests, beds } } = accommodation;
           let imageUrl = emptyImage;
-          if (images.length > 0) {
-            imageUrl = images[0].url;
+          if (images.data.length > 0) {
+            imageUrl = images.data[0].attributes.url;
           }
           return <Accommodation key={id} id={id} name={name} image={imageUrl} price={price} guests={guests} beds={beds} />
         })}
       </Row>
     </div>
   );
+  // return (
+  //   <div className="accommodations-page">
+  //     <Heading content="Accommodations" />
+  //     <Form>
+  //       <Form.Select onChange={e => handleChange(e.target.value)}>
+  //         <option value="">All accommodations</option>
+  //         <option value="bed-and-breakfast">Bed and Breakfast</option>
+  //         <option value="guest-houses">Guest Houses</option>
+  //         <option value="hotels">Hotels</option>
+  //       </Form.Select>
+  //     </Form>
+  //     <Row className="accommodations-container container">
+  //       {accommodations.map((accommodation) => {
+  //         let imageUrl = emptyImage;
+  //         if (accommodation.attributes.images.data.length > 0) {
+  //           imageUrl = accommodation.attributes.images.data[0].attributes.url;
+  //         }
+  //         return <Accommodation key={accommodation.id} id={accommodation.id} name={accommodation.attributes.name} image={imageUrl} price={accommodation.attributes.price} guests={accommodation.attributes.guests} beds={accommodation.attributes.beds} />
+  //       })}
+  //     </Row>
+  //   </div>
+  // );
 }

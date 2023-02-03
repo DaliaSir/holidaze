@@ -21,7 +21,7 @@ export default function AdminMessagesPage() {
       try {
         const response = await http.get(url);
         console.log("response", response);
-        setMessages(response.data);
+        setMessages(response.data.data);
       } catch (error) {
         console.log(error);
         setError("An error occurred:" + error.toString());
@@ -51,10 +51,11 @@ export default function AdminMessagesPage() {
       <Heading content="Inbox" />
       <Container className="messages-container">
         {messages.map((messageItem) => {
-          const { id, created_at, name, email, subject, message } = messageItem;
+          const { id, attributes: { createdAt, name, email, subject, message } } = messageItem;
+          console.log(messageItem);
           const options = { year: "numeric", month: "short", day: "2-digit" };
-          const newDate = new Date(created_at).toLocaleDateString("en-GB", options);
-          return <MessageItem key={id} id={id} name={name} email={email} subject={subject} message={message} created_at={newDate} />
+          const newDate = new Date(createdAt).toLocaleDateString("en-GB", options);
+          return <MessageItem key={id} id={id} name={name} email={email} subject={subject} message={message} createdAt={newDate} />
         })}
       </Container>
     </div>

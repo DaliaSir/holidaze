@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-export default function MessageItem({ id, name, email, created_at, subject, message }) {
+export default function MessageItem({ id, name, email, createdAt, subject, message }) {
   const [modalShow, setModalShow] = useState(false);
 
   function ViewMessageModal(props) {
@@ -17,7 +17,7 @@ export default function MessageItem({ id, name, email, created_at, subject, mess
         </Modal.Header>
         <Modal.Body>
           <h4>{subject}</h4>
-          <p className="messages-modal__date">{created_at}</p>
+          <p className="messages-modal__date">{createdAt}</p>
           <p>
             {message}
           </p>
@@ -32,7 +32,7 @@ export default function MessageItem({ id, name, email, created_at, subject, mess
         <Card.Header>
           <div className="card-header__name">{name}</div>
           <div className="card-header__email">{email}</div>
-          <div className="card-header__date">{created_at}</div>
+          <div className="card-header__date">{createdAt}</div>
         </Card.Header>
         <Card.Body>
           <div className="card-body__subject">Subject: <br /><span>{subject}</span></div>

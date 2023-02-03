@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import useAxios from "../../hooks/useAxios";
+//import axios from "axios";
 import { BASE_URL, ENQUIRY_PATH } from "../../constants/api";
 import { bookValidationSchema } from "../utils/Validation";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -42,17 +43,18 @@ export default function DetailsPage() {
 
   let { id } = useParams();
   const navigate = useNavigate();
+  const http = useAxios();
 
-  const url = BASE_URL + `accommodations/${id}`;
+  const url = BASE_URL + `accommodations/${id}?populate=*`;
   const urlEnquiries = BASE_URL + ENQUIRY_PATH;
-  document.title = `Holidaze | ${product.name}`;
 
   useEffect(function () {
     async function getData() {
+      setLoading(true);
       try {
-        const response = await axios.get(url);
+        const response = await http.get(url);
         console.log("response", response);
-        setProduct(response.data);
+        setProduct(response.data.data);
       } catch (error) {
         console.log(error);
         setError(error.toString());
@@ -61,6 +63,7 @@ export default function DetailsPage() {
       }
     }
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   if (loading) return (
@@ -71,20 +74,22 @@ export default function DetailsPage() {
 
   if (error) return <Alert variant="danger">An error occurred: {error}</Alert>;
 
+  document.title = `Holidaze | ${product.attributes.name}`;
+
   function ImageModal(props) {
     return (
       <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered className="details-modal-view">
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body >
           <Carousel variant="dark" className="details-carousel">
-            {product.images.map(img => {
+            {product.attributes.images.data.map(img => {
               let imageUrl = emptyImage;
-              if (product.images.length > 0) {
-                imageUrl = img.url;
+              if (product.attributes.images.data.length > 0) {
+                imageUrl = img.attributes.url;
               }
               return (
                 <Carousel.Item key={img.id}>
-                  <img className="d-block w-100" src={imageUrl} alt={product.name} />
+                  <img className="d-block w-100" src={imageUrl} alt={product.attributes.name} />
                 </Carousel.Item>
               )
             })}
@@ -101,7 +106,16 @@ export default function DetailsPage() {
     setSubmitting(true);
     setsubmittingError(null);
     try {
-      const response = await axios.post(urlEnquiries, data);
+      const response = await http.post(urlEnquiries, {
+        data: {
+          name: data.name,
+          email: data.email,
+          guests: data.guests,
+          phone: data.phone,
+          check_in: data.check_in,
+          check_out: data.check_out
+        }
+      });
       console.log("response", response.data);
     } catch (error) {
       console.log("error", error);
@@ -117,7 +131,7 @@ export default function DetailsPage() {
       <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered animation className="enquiry-modal" >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Book {product.name}
+            Book {product.attributes.name}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -175,28 +189,28 @@ export default function DetailsPage() {
       <Breadcrumb>
         <Breadcrumb.Item onClick={() => navigate("/")}>Home</Breadcrumb.Item>
         <Breadcrumb.Item onClick={() => navigate("/accommodations")}>Accommodations</Breadcrumb.Item>
-        <Breadcrumb.Item active>{product.name}</Breadcrumb.Item>
+        <Breadcrumb.Item active>{product.attributes.name}</Breadcrumb.Item>
       </Breadcrumb>
-      <Heading content={product.name} />
+      <Heading content={product.attributes.name} />
       <Row className="details-container__image-container" onClick={() => setModalImageShow(true)}>
-        {product.images.map((img) => {
+        {product.attributes.images.data.map((img) => {
           let imageUrl = emptyImage;
-          if (product.images.length > 0) {
-            imageUrl = img.url;
+          if (product.attributes.images.data.length > 0) {
+            imageUrl = img.attributes.url;
           }
           return <Col className="details-container__image col-12 col-sm-6 col-md-3 col-lg-2" key={img.id} style={{ backgroundImage: `url(${imageUrl})` }}></Col>
         })}
       </Row>
       <ImageModal show={modalImageShow} onHide={() => setModalImageShow(false)} />
       <Row className="details-container__info">
-        <p className="details-container__info--price">{product.price} <span>NOK / per night</span></p>
+        <p className="details-container__info--price">{product.attributes.price} <span>NOK / per night</span></p>
         <div className="details-container__info--capacity">
-          <p><i className="fas fa-user-friends"></i>  <span>Guests</span> {product.guests}</p>
+          <p><i className="fas fa-user-friends"></i>  <span>Guests</span> {product.attributes.guests}</p>
           <div className="dot"></div>
-          <p><i className="fas fa-bed"></i> <span>Beds</span> {product.beds}</p>
+          <p><i className="fas fa-bed"></i> <span>Beds</span> {product.attributes.beds}</p>
         </div>
-        <p className="details-container__info--address">{product.address}</p>
-        <p className="details-container__info--description">{product.description}</p>
+        <p className="details-container__info--address">{product.attributes.address}</p>
+        <p className="details-container__info--description">{product.attributes.description}</p>
       </Row>
       <Button className="details-container__btn-book" onClick={() => setModalBookShow(true)}>
         Book
