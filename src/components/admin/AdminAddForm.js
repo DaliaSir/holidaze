@@ -25,6 +25,7 @@ export default function AdminAddForm() {
 
   const handleChange = (e) => {
     const images = e.target.files;
+    console.log(images);
     if (e.target && e.target.files) {
       for (let i = 0; i < images.length; i++) {
         formData.append("files.images", images[i]);
@@ -32,11 +33,11 @@ export default function AdminAddForm() {
     }
   }
 
-  async function onSubmit({ name, address, description, guests, beds, price, category, is_featured }) {
+  async function onSubmit({ name, address, description, guests, beds, price, category, featured }) {
     setSubmitting(true);
     setsubmittingError(null);
 
-    const data = JSON.stringify({ data: { name, address, description, guests, beds, price, category, is_featured } });
+    const data = JSON.stringify({ data: { name, address, description, guests, beds, price, category, featured } });
     console.log(data);
 
     formData.append("data", data);
@@ -44,6 +45,8 @@ export default function AdminAddForm() {
     try {
       const response = await http.post(url, formData);
       console.log("response", response.data);
+      console.log(url);
+      console.log(formData);
       setSuccess(true);
     } catch (error) {
       console.log("error", error);
@@ -93,8 +96,8 @@ export default function AdminAddForm() {
           </Form.Group>
           <Form.Group className="mb-3 add-container__form--featured">
             <Form.Label>Featured</Form.Label>
-            <input {...register("is_featured")} className="form-check-input" type="checkbox" placeholder="Check if it is featured" />
-            {errors.is_featured && <FormError>{errors.is_featured.message}</FormError>}
+            <input {...register("featured")} className="form-check-input" type="checkbox" placeholder="Check if it is featured" />
+            {errors.featured && <FormError>{errors.featured.message}</FormError>}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Category</Form.Label>
