@@ -15,11 +15,12 @@ export default function BestSellers() {
 
   useEffect(() => {
     async function fetchAccommodations() {
+      setLoading(true);
       try {
         const response = await fetch(url);
         if (response.ok) {
           const json = await response.json();
-          setAccommodations(json);
+          setAccommodations(json.data);
         } else {
           setError("An error occurred");
         }
@@ -49,10 +50,10 @@ export default function BestSellers() {
   return (
     <Row className="best-sellers-container container">
       {accommodations.map((accommodation) => {
-        const { id, name, images, price, guests, beds, is_featured } = accommodation;
+        const { id, attributes: { name, images, price, guests, beds, is_featured } } = accommodation;
         let imageUrl = 'https://images.unsplash.com/photo-1612437118782-84bb46a5c95a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80';
         if (images.length > 0) {
-          imageUrl = images[0].url;
+          imageUrl = images.data[0].attributes.url;
         }
         if (is_featured) {
           return <Accommodation key={id} id={id} name={name} image={imageUrl} price={price} guests={guests} beds={beds} />

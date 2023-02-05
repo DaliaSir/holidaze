@@ -12,11 +12,12 @@ export default function SearchAccommodations() {
 
   useEffect(() => {
     async function fetchAccommodations() {
+      setLoading(true);
       try {
         const response = await fetch(url);
         if (response.ok) {
           const json = await response.json();
-          setAccommodations(json);
+          setAccommodations(json.data);
         } else {
           setError("An error occurred");
         }
@@ -39,7 +40,7 @@ export default function SearchAccommodations() {
   const results = !searchInput
     ? []
     : accommodations.filter(accommodation =>
-      accommodation.name.toLowerCase().includes(searchInput.toLocaleLowerCase())
+      accommodation.attributes.name.toLowerCase().includes(searchInput.toLocaleLowerCase())
     );
 
   return (
@@ -50,8 +51,8 @@ export default function SearchAccommodations() {
           return (
             <div className="search-dropdown__item" key={item.id} >
               <Link className="search-dropdown__item--link dropdown-item" to={`detail/${item.id}`}>
-                <span>{item.name}</span>
-                <div style={{ backgroundImage: `url(${item.images[0].url})` }}></div>
+                <span>{item.attributes.name}</span>
+                <div style={{ backgroundImage: `url(${item.attributes.images.data[0].attributes.url})` }}></div>
               </Link>
             </div>
           );
