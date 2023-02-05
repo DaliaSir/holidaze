@@ -50,12 +50,12 @@ export default function BestSellers() {
   return (
     <Row className="best-sellers-container container">
       {accommodations.map((accommodation) => {
-        const { id, attributes: { name, images, price, guests, beds, is_featured } } = accommodation;
+        const { id, attributes: { name, images, price, guests, beds, featured } } = accommodation;
         let imageUrl = 'https://images.unsplash.com/photo-1612437118782-84bb46a5c95a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=627&q=80';
-        if (images.length > 0) {
+        if (images.data.length > 0) {
           imageUrl = images.data[0].attributes.url;
         }
-        if (is_featured) {
+        if (featured) {
           return <Accommodation key={id} id={id} name={name} image={imageUrl} price={price} guests={guests} beds={beds} />
         } else {
           return error;

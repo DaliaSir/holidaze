@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import useAxios from "../../hooks/useAxios";
 import { addValidationSchema } from "../utils/Validation";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { BASE_URL, ACCOMMODATION_PATH } from "../../constants/api";
+import { BASE_URL } from "../../constants/api";
 import FormError from "../common/FormError";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -14,7 +14,7 @@ export default function AdminAddForm() {
   const [success, setSuccess] = useState(null);
 
   document.title = `Holidaze | Admin | Add`;
-  const url = BASE_URL + ACCOMMODATION_PATH;
+  const url = BASE_URL + `accommodations`;
   const http = useAxios();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -36,8 +36,8 @@ export default function AdminAddForm() {
     setSubmitting(true);
     setsubmittingError(null);
 
-    const data = JSON.stringify({ name, address, description, guests, beds, price, category, is_featured });
-    //console.log(data);
+    const data = JSON.stringify({ data: { name, address, description, guests, beds, price, category, is_featured } });
+    console.log(data);
 
     formData.append("data", data);
 
