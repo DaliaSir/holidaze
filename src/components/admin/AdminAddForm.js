@@ -14,7 +14,7 @@ export default function AdminAddForm() {
   const [success, setSuccess] = useState(null);
 
   document.title = `Holidaze | Admin | Add`;
-  const url = BASE_URL + `accommodations`;
+  const url = BASE_URL + `accommodations/`;
   const http = useAxios();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -24,29 +24,39 @@ export default function AdminAddForm() {
   let formData = new FormData();
 
   const handleChange = (e) => {
-    const images = e.target.files;
-    console.log(images);
     if (e.target && e.target.files) {
-      for (let i = 0; i < images.length; i++) {
-        formData.append("files.images", images[i]);
-      }
+      const images = Array.from(e.target.files);
+      images.forEach((image) =>
+        formData.append(`files.images`, image, image.name)
+      );
     }
   }
 
-  async function onSubmit({ name, address, description, guests, beds, price, category, featured }) {
+  async function onSubmit({ name, address, description, guests, beds, price, categoryInfo, featured }) {
     setSubmitting(true);
     setsubmittingError(null);
 
-    const data = JSON.stringify({ data: { name, address, description, guests, beds, price, category, featured } });
-    console.log(data);
+    let categoryId = "";
+    if (categoryInfo === "hotel") {
+      categoryId = 1;
+    };
+    if (categoryInfo === "bed and breakfast") {
+      categoryId = 2;
+    };
+    if (categoryInfo === "guest house") {
+      categoryId = 3;
+    };
+    const category = {
+      id: categoryId,
+      type: categoryInfo
+    };
 
+    const data = JSON.stringify({ name, address, description, guests, beds, price, category, featured });
     formData.append("data", data);
 
     try {
       const response = await http.post(url, formData);
       console.log("response", response.data);
-      console.log(url);
-      console.log(formData);
       setSuccess(true);
     } catch (error) {
       console.log("error", error);
@@ -56,6 +66,40 @@ export default function AdminAddForm() {
       reset();
     }
   }
+
+  // const handleChange = (e) => {
+  //   const images = e.target.files;
+  //   console.log(images);
+  //   if (e.target && e.target.files) {
+  //     for (let i = 0; i < images.length; i++) {
+  //       formData.append("files.images", images[i]);
+  //     }
+  //   }
+  // }
+
+  // async function onSubmit({ name, address, description, guests, beds, price, category, featured }) {
+  //   setSubmitting(true);
+  //   setsubmittingError(null);
+
+  //   const data = JSON.stringify({ data: { name, address, description, guests, beds, price, category, featured } });
+  //   console.log(data);
+
+  //   formData.append("data", data);
+
+  //   try {
+  //     const response = await http.post(url, formData);
+  //     console.log("response", response.data);
+  //     console.log(url);
+  //     console.log(formData);
+  //     setSuccess(true);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //     setsubmittingError(error.toString());
+  //   } finally {
+  //     setSubmitting(false);
+  //     reset();
+  //   }
+  // }
   return (
     <Container className="add-container__form">
       <p className="add-container__form--success-message">
@@ -91,7 +135,7 @@ export default function AdminAddForm() {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Images</Form.Label>
-            <input {...register("images")} className="form-control" type="file" accept="image/*" multiple placeholder="Select 5 images" onChange={handleChange} />
+            <input {...register("images")} className="form-control" type="file" accept="image/*" multiple placeholder="Select 5 images" alt="image of the accommodation" onChange={handleChange} />
             {errors.images && <FormError>{errors.images.message}</FormError>}
           </Form.Group>
           <Form.Group className="mb-3 add-container__form--featured">
@@ -101,7 +145,7 @@ export default function AdminAddForm() {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Category</Form.Label>
-            <Form.Select {...register("category")}>
+            <Form.Select {...register("categoryInfo")}>
               <option value="">Select a category..</option>
               <option value="bed and breakfast">Bed and Breakfast</option>
               <option value="guest house">Guest House</option>

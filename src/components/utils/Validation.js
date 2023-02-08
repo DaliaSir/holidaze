@@ -36,7 +36,7 @@ export const addValidationSchema = yup.object().shape({
   }),
   is_featured: yup.boolean(),
   description: yup.string().required("Please enter the description").min(10, "The description must be at least 10 characters"),
-  category: yup.string().required("Please select the category"),
+  categoryInfo: yup.string().required("Please select the category"),
 });
 
 export const bookValidationSchema = yup.object().shape({
