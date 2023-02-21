@@ -17,7 +17,8 @@ export default function SearchAccommodations() {
         const response = await fetch(url);
         if (response.ok) {
           const json = await response.json();
-          setAccommodations(json.data);
+          const data = json.data;
+          setAccommodations(data);
         } else {
           setError("An error occurred");
         }

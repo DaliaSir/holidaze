@@ -67,39 +67,6 @@ export default function AdminAddForm() {
     }
   }
 
-  // const handleChange = (e) => {
-  //   const images = e.target.files;
-  //   console.log(images);
-  //   if (e.target && e.target.files) {
-  //     for (let i = 0; i < images.length; i++) {
-  //       formData.append("files.images", images[i]);
-  //     }
-  //   }
-  // }
-
-  // async function onSubmit({ name, address, description, guests, beds, price, category, featured }) {
-  //   setSubmitting(true);
-  //   setsubmittingError(null);
-
-  //   const data = JSON.stringify({ data: { name, address, description, guests, beds, price, category, featured } });
-  //   console.log(data);
-
-  //   formData.append("data", data);
-
-  //   try {
-  //     const response = await http.post(url, formData);
-  //     console.log("response", response.data);
-  //     console.log(url);
-  //     console.log(formData);
-  //     setSuccess(true);
-  //   } catch (error) {
-  //     console.log("error", error);
-  //     setsubmittingError(error.toString());
-  //   } finally {
-  //     setSubmitting(false);
-  //     reset();
-  //   }
-  // }
   return (
     <Container className="add-container__form">
       <p className="add-container__form--success-message">
@@ -135,7 +102,8 @@ export default function AdminAddForm() {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Images</Form.Label>
-            <input {...register("images")} className="form-control" type="file" accept="image/*" multiple placeholder="Select 5 images" alt="image of the accommodation" onChange={handleChange} />
+            <input {...register("images")} className="form-control" type="file" accept="image/*" multiple placeholder="Select 5 images"
+              alt="image of the accommodation" onChange={handleChange} />
             {errors.images && <FormError>{errors.images.message}</FormError>}
           </Form.Group>
           <Form.Group className="mb-3 add-container__form--featured">
