@@ -8,13 +8,13 @@ import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 
-export default function AdminEnquiresPage() {
+export default function AdminEnquiriesPage() {
   const [enquiries, setEnquiries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const url = BASE_URL + ENQUIRY_PATH;
-  document.title = `Holidaze | Admin | Enquires`;
+  document.title = `Holidaze | Admin | Enquiries`;
   const http = useAxios();
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function AdminEnquiresPage() {
 
   return (
     <div className="enquiries-container">
-      <Heading content="Enquires" />
+      <Heading content="Enquiries" />
       <Container>
         <Row>
           {enquiries.map((enquiryItem) => {

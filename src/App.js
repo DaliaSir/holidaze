@@ -10,7 +10,7 @@ import ContactPage from "./components/contact/ContactPage";
 import SigninPage from "./components/signin/SigninPage";
 import AdminAddPage from "./components/admin/AdminAddPage";
 import AdminMessagesPage from "./components/admin/AdminMessagesPage";
-import AdminEnquiresPage from "./components/admin/AdminEnquiresPage";
+import AdminEnquiriesPage from "./components/admin/AdminEnquiriesPage";
 import DetailsPage from "./components/details/DetailsPage";
 import Footer from "./components/layout/Footer";
 import "./sass/style.scss";
@@ -32,7 +32,7 @@ function App() {
             <Route path="/signin" element={<SigninPage />} />
             <Route path="/admin/add" element={<AdminAddPage />} />
             <Route path="/admin/messages" element={<AdminMessagesPage />} />
-            <Route path="/admin/enquires" element={<AdminEnquiresPage />} />
+            <Route path="/admin/enquiries" element={<AdminEnquiriesPage />} />
             <Route path="/detail/:id" element={<DetailsPage />} />
           </Routes>
         </div>

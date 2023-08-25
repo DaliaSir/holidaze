@@ -47,8 +47,8 @@ export default function Navigation() {
                   <LinkContainer to="/admin/messages">
                     <Nav.Link className="dropdown-item">Messages</Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/admin/enquires">
-                    <Nav.Link className="dropdown-item">Enquires</Nav.Link>
+                  <LinkContainer to="/admin/enquiries">
+                    <Nav.Link className="dropdown-item">Enquiries</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/admin/add">
                     <Nav.Link className="dropdown-item">Add New</Nav.Link>
